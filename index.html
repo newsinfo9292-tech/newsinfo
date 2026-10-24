@@ -27,6 +27,19 @@ header{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var
 .tabs{display:flex;gap:8px;padding:12px}
 .tab{flex:1;padding:10px 4px;border-radius:99px;border:1px solid var(--glassb);background:var(--glass);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);color:var(--mute);font:600 15px "Hind Siliguri",sans-serif;cursor:pointer;box-shadow:inset 0 1px 0 var(--glassb)}
 .tab[aria-selected="true"]{color:var(--acc);border-color:var(--acc);background:var(--glassb);box-shadow:0 4px 16px rgba(27,75,216,.22),inset 0 1px 0 var(--glassb)}
+#bk{display:flex;align-items:center;gap:10px;padding:8px 14px;color:#fff;background:linear-gradient(90deg,#b3001b,#e5383b);font-weight:600;font-size:15px;box-shadow:0 4px 14px rgba(179,0,27,.35)}
+#bk[hidden]{display:none}
+.bkl{flex:none;display:flex;align-items:center;gap:6px;background:#fff;color:#c1121f;border-radius:6px;padding:1px 8px;font-size:13px}
+.bkl::before{content:"";width:7px;height:7px;border-radius:50%;background:#c1121f;animation:bl 1.4s infinite}
+@keyframes bl{50%{opacity:.25}}
+.bkw{flex:1;min-width:0;overflow:hidden;color:#fff;text-decoration:none}
+a.bkw:not([href]){cursor:default}
+.bkt{display:inline-block;white-space:nowrap}
+.bkt.run{padding-left:100%;animation:mq 16s linear infinite}
+.bkw:hover .bkt{animation-play-state:paused}
+@keyframes mq{to{transform:translateX(-100%)}}
+#bkc{flex:none;background:rgba(255,255,255,.2);border:0;color:#fff;width:28px;height:28px;border-radius:50%;cursor:pointer}
+@media (prefers-reduced-motion:reduce){.bkt.run{animation:none;padding-left:0;white-space:normal}.bkl::before{animation:none}}
 main{padding:0 12px 40px}
 .pill{display:none;margin:0 auto 12px;background:var(--glassb);color:var(--acc);border:1px solid var(--acc);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);box-shadow:0 6px 18px rgba(27,75,216,.25);border-radius:99px;padding:7px 18px;font:600 14px "Hind Siliguri",sans-serif;cursor:pointer}
 .card{display:flex;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:14px;box-shadow:0 2px 10px rgba(20,33,61,.07);padding:14px;margin-bottom:12px;text-decoration:none;color:inherit}
@@ -49,7 +62,9 @@ footer{text-align:center;color:var(--mute);font-size:13px;padding:0 14px 30px}
    <button class="ib" id="tb" aria-label="ডার্ক বা লাইট মোড">🌓</button>
   </div></div>
  <div id="sw"><input id="q" type="search" placeholder="খবর খুঁজুন"></div>
-</div></header>
+</div>
+<div id="bk" hidden><span class="bkl">ব্রেকিং</span><a id="bka" class="bkw" target="_blank" rel="noopener noreferrer"><span id="bkt" class="bkt"></span></a><button id="bkc" aria-label="ব্রেকিং বন্ধ করুন">✕</button></div>
+</header>
 <div class="wrap">
  <div class="tabs" role="tablist">
   <button class="tab" role="tab" aria-selected="true" data-c="bd">বর্তমান</button>
@@ -98,11 +113,25 @@ document.querySelectorAll(".tab").forEach(function(b){b.onclick=function(){
  b.setAttribute("aria-selected","true");cat=b.dataset.c;pill.style.display="none";render();load(cat).then(pillUpdate)}});
 document.getElementById("sb").onclick=function(){var s=document.getElementById("sw");var o=s.style.display==="block";s.style.display=o?"none":"block";if(!o)document.getElementById("q").focus()};
 document.getElementById("q").oninput=function(e){qv=e.target.value.trim().toLowerCase();render()};
+var BKU="https://newsinfo-fetcher.newsinfo9292.workers.dev/breaking";
+function loadBk(){fetch(BKU).then(function(r){return r.json()}).then(function(j){
+ var b=document.getElementById("bk");
+ if(!j.text){b.hidden=true;return}
+ var x="";try{x=sessionStorage.getItem("bkx")}catch(e){}
+ if(x===String(j.id)){b.hidden=true;return}
+ var t=document.getElementById("bkt"),a=document.getElementById("bka");
+ t.textContent=j.text;t.classList.remove("run");
+ if(j.url&&/^https?:/.test(j.url))a.href=j.url;else a.removeAttribute("href");
+ b.dataset.id=j.id;b.hidden=false;
+ requestAnimationFrame(function(){if(t.scrollWidth>a.clientWidth)t.classList.add("run")})
+}).catch(function(){})}
+document.getElementById("bkc").onclick=function(){var b=document.getElementById("bk");b.hidden=true;try{sessionStorage.setItem("bkx",b.dataset.id)}catch(e){}};
 var root=document.documentElement;
 try{var t=localStorage.getItem("theme");if(t)root.dataset.theme=t}catch(e){}
 document.getElementById("tb").onclick=function(){var d=root.dataset.theme==="dark"||(!root.dataset.theme&&matchMedia("(prefers-color-scheme:dark)").matches);root.dataset.theme=d?"light":"dark";try{localStorage.setItem("theme",root.dataset.theme)}catch(e){}};
 load(cat);
-setInterval(function(){if(!document.hidden)load(cat)},60000);
+loadBk();
+setInterval(function(){if(!document.hidden){load(cat);loadBk()}},60000);
 document.addEventListener("visibilitychange",function(){if(!document.hidden)load(cat)});
 </script>
 </body>
