@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>news.info – সর্বশেষ খবর</title>
+<meta name="description" content="বাংলাদেশ, আন্তর্জাতিক ও খেলাধুলার সর্বশেষ খবর, লাইভ আপডেটসহ।">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600&family=Noto+Serif+Bengali:wght@600;700&display=swap">
+<style>
+:root{--g1:#cfdcff;--g2:#e6d9ff;--glass:rgba(255,255,255,.55);--glassb:rgba(255,255,255,.75);--bg:#f3f5f8;--card:#fff;--ink:#14213d;--mute:#5d6b82;--line:#dde3ec;--acc:#1b4bd8;--soft:#e8eefc;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--g1:#1b2f66;--g2:#3a1f4d;--glass:rgba(255,255,255,.08);--glassb:rgba(255,255,255,.18);--bg:#0e131c;--card:#171e2b;--ink:#eaf0fb;--mute:#93a1ba;--line:#273146;--acc:#7da2ff;--soft:#1f2a42;color-scheme:dark}}
+:root[data-theme="dark"]{--g1:#1b2f66;--g2:#3a1f4d;--glass:rgba(255,255,255,.08);--glassb:rgba(255,255,255,.18);--bg:#0e131c;--card:#171e2b;--ink:#eaf0fb;--mute:#93a1ba;--line:#273146;--acc:#7da2ff;--soft:#1f2a42;color-scheme:dark}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:radial-gradient(circle at 15% 0,var(--g1),transparent 45%),radial-gradient(circle at 90% 25%,var(--g2),transparent 40%),var(--bg);background-attachment:fixed;color:var(--ink);font-family:"Hind Siliguri",system-ui,sans-serif;font-size:16px;line-height:1.5}
+.wrap{max-width:680px;margin:0 auto}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--glass);-webkit-backdrop-filter:blur(18px) saturate(160%);backdrop-filter:blur(18px) saturate(160%);border-bottom:1px solid var(--glassb)}
+.bar{display:flex;align-items:center;justify-content:space-between;padding:10px 14px}
+.logo{font-family:"Noto Serif Bengali",serif;font-weight:700;font-size:23px;letter-spacing:-.3px}
+.logo b{color:var(--acc)}
+.icons{display:flex;gap:6px}
+.ib{width:42px;height:42px;border-radius:50%;border:1px solid var(--glassb);background:var(--glass);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);box-shadow:inset 0 1px 0 var(--glassb),0 4px 14px rgba(20,33,61,.12);color:var(--ink);font-size:17px;cursor:pointer}
+.ib:active{transform:scale(.92)}
+.ib:focus-visible,.tab:focus-visible,.pill:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+#sw{display:none;padding:0 14px 10px}
+#sw input{width:100%;padding:10px 14px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font:inherit}
+.tabs{display:flex;gap:8px;padding:12px}
+.tab{flex:1;padding:10px 4px;border-radius:99px;border:1px solid var(--glassb);background:var(--glass);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);color:var(--mute);font:600 15px "Hind Siliguri",sans-serif;cursor:pointer;box-shadow:inset 0 1px 0 var(--glassb)}
+.tab[aria-selected="true"]{color:var(--acc);border-color:var(--acc);background:var(--glassb);box-shadow:0 4px 16px rgba(27,75,216,.22),inset 0 1px 0 var(--glassb)}
+main{padding:0 12px 40px}
+.pill{display:none;margin:0 auto 12px;background:var(--glassb);color:var(--acc);border:1px solid var(--acc);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);box-shadow:0 6px 18px rgba(27,75,216,.25);border-radius:99px;padding:7px 18px;font:600 14px "Hind Siliguri",sans-serif;cursor:pointer}
+.card{display:flex;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:14px;box-shadow:0 2px 10px rgba(20,33,61,.07);padding:14px;margin-bottom:12px;text-decoration:none;color:inherit}
+.th{flex:none;width:84px;height:84px;border-radius:10px;background:var(--soft);display:grid;place-items:center;font-size:30px;overflow:hidden}
+.th img{width:100%;height:100%;object-fit:cover}
+.card h3{margin:0 0 4px;font-family:"Noto Serif Bengali",serif;font-size:17px;line-height:1.45}
+.card p{margin:0 0 6px;color:var(--mute);font-size:14px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.meta{font-size:13px;color:var(--mute)}
+.meta b{color:var(--acc);font-weight:600}
+.empty{text-align:center;color:var(--mute);padding:30px 0}
+footer{text-align:center;color:var(--mute);font-size:13px;padding:0 14px 30px}
+@media (min-width:900px){.wrap{max-width:760px}}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+ <div class="bar"><div class="logo">news<b>.info</b></div>
+  <div class="icons">
+   <button class="ib" id="sb" aria-label="সার্চ">🔍</button>
+   <button class="ib" id="tb" aria-label="ডার্ক বা লাইট মোড">🌓</button>
+  </div></div>
+ <div id="sw"><input id="q" type="search" placeholder="খবর খুঁজুন"></div>
+</div></header>
+<div class="wrap">
+ <div class="tabs" role="tablist">
+  <button class="tab" role="tab" aria-selected="true" data-c="bd">বর্তমান</button>
+  <button class="tab" role="tab" aria-selected="false" data-c="intl">আন্তর্জাতিক</button>
+  <button class="tab" role="tab" aria-selected="false" data-c="sp">খেলাধুলা</button>
+ </div>
+ <main>
+  <button class="pill" id="pill"></button>
+  <div id="list"><div class="empty">খবর আসছে…</div></div>
+ </main>
+ <footer>শিরোনাম ও সারাংশ সোর্স থেকে সংগৃহীত। পুরো খবর পড়তে সংশ্লিষ্ট সাইটে যান।</footer>
+</div>
+<script>
+var API="https://newsinfo-fetcher.newsinfo9292.workers.dev/news?cat=";
+var cat="bd",items={},latest={},qv="";
+var list=document.getElementById("list"),pill=document.getElementById("pill");
+function bn(n){return String(n).replace(/\d/g,function(d){return"০১২৩৪৫৬৭৮৯"[d]})}
+function ago(d){var m=(Date.now()-new Date(d).getTime())/60000;if(m<1)return"এইমাত্র";if(m<60)return bn(Math.floor(m))+" মিনিট আগে";var h=m/60;if(h<24)return bn(Math.floor(h))+" ঘণ্টা আগে";return bn(Math.floor(h/24))+" দিন আগে"}
+function el(t,c,x){var e=document.createElement(t);if(c)e.className=c;if(x)e.textContent=x;return e}
+function card(a){
+ var c=el("a","card");c.href=a.u;c.target="_blank";c.rel="noopener noreferrer";
+ var th=el("div","th");
+ if(a.i&&/^https?:/.test(a.i)){var im=document.createElement("img");im.loading="lazy";im.alt="";im.src=a.i;im.onerror=function(){th.textContent="📰"};th.appendChild(im)}else th.textContent="📰";
+ var b=el("div");b.appendChild(el("h3","",a.t));
+ if(a.s)b.appendChild(el("p","",a.s));
+ var m=el("div","meta");m.appendChild(el("b","",a.src||""));m.appendChild(document.createTextNode(" · "+ago(a.p)));
+ b.appendChild(m);c.appendChild(th);c.appendChild(b);return c}
+function render(){
+ var a=items[cat];list.textContent="";
+ if(!a){list.appendChild(el("div","empty","খবর আসছে…"));return}
+ var f=a.filter(function(x){return!qv||((x.t||"")+(x.s||"")).toLowerCase().indexOf(qv)>=0});
+ if(!f.length){list.appendChild(el("div","empty",qv?"কোনো খবর পাওয়া যায়নি। অন্য শব্দে খুঁজুন।":"এখনো কোনো খবর নেই।"));return}
+ f.forEach(function(x){list.appendChild(card(x))})}
+function pillUpdate(){
+ var a=items[cat],l=latest[cat];if(!a||!l){pill.style.display="none";return}
+ var ids={};a.forEach(function(x){ids[x.id]=1});
+ var n=l.filter(function(x){return!ids[x.id]}).length;
+ if(n){pill.textContent="↑ "+bn(n)+"টি নতুন খবর";pill.style.display="block"}else pill.style.display="none"}
+function load(c){
+ return fetch(API+c).then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(a){
+  latest[c]=a;if(!items[c]){items[c]=a;if(c===cat)render()}else if(c===cat)pillUpdate()
+ }).catch(function(){if(!items[c]&&c===cat){list.textContent="";list.appendChild(el("div","empty","খবর আনা যায়নি। একটু পরে আবার চেষ্টা করুন।"))}})}
+pill.onclick=function(){items[cat]=latest[cat];pill.style.display="none";render();window.scrollTo({top:0,behavior:"smooth"})};
+document.querySelectorAll(".tab").forEach(function(b){b.onclick=function(){
+ document.querySelectorAll(".tab").forEach(function(x){x.setAttribute("aria-selected","false")});
+ b.setAttribute("aria-selected","true");cat=b.dataset.c;pill.style.display="none";render();load(cat).then(pillUpdate)}});
+document.getElementById("sb").onclick=function(){var s=document.getElementById("sw");var o=s.style.display==="block";s.style.display=o?"none":"block";if(!o)document.getElementById("q").focus()};
+document.getElementById("q").oninput=function(e){qv=e.target.value.trim().toLowerCase();render()};
+var root=document.documentElement;
+try{var t=localStorage.getItem("theme");if(t)root.dataset.theme=t}catch(e){}
+document.getElementById("tb").onclick=function(){var d=root.dataset.theme==="dark"||(!root.dataset.theme&&matchMedia("(prefers-color-scheme:dark)").matches);root.dataset.theme=d?"light":"dark";try{localStorage.setItem("theme",root.dataset.theme)}catch(e){}};
+load(cat);
+setInterval(function(){if(!document.hidden)load(cat)},60000);
+document.addEventListener("visibilitychange",function(){if(!document.hidden)load(cat)});
+</script>
+</body>
+</html>
