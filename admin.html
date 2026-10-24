@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>news.info অ্যাডমিন</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600&display=swap">
+<style>
+:root{--bg:#f3f5f8;--card:#fff;--ink:#14213d;--mute:#5d6b82;--line:#dde3ec;--acc:#1b4bd8;--red:#d62828;--soft:#e8eefc;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root{--bg:#0e131c;--card:#171e2b;--ink:#eaf0fb;--mute:#93a1ba;--line:#273146;--acc:#7da2ff;--red:#ff6b6b;--soft:#1f2a42;color-scheme:dark}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 "Hind Siliguri",system-ui,sans-serif}
+.wrap{max-width:760px;margin:0 auto;padding:12px}
+h1{font-size:20px;margin:6px 0 12px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+input,select,textarea,button{font:inherit;color:var(--ink)}
+input,select,textarea{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--card);margin-bottom:8px}
+textarea{min-height:80px}
+button{border:1px solid var(--line);background:var(--card);border-radius:10px;padding:8px 14px;cursor:pointer}
+button.p{background:var(--acc);border-color:var(--acc);color:#fff;font-weight:600}
+button.d{color:var(--red)}
+button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+.tabs{display:flex;gap:6px;margin-bottom:12px;overflow-x:auto}
+.tabs button[aria-selected="true"]{background:var(--soft);border-color:var(--acc);color:var(--acc);font-weight:600}
+.box{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px;margin-bottom:10px}
+.it h4{margin:0 0 2px;font-size:16px;font-weight:600}
+.m{font-size:13px;color:var(--mute);margin-bottom:6px}
+.msg{padding:8px 12px;border-radius:10px;background:var(--soft);margin-bottom:10px;display:none}
+.off{opacity:.55}
+#app{display:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>news.info অ্যাডমিন</h1>
+<div class="msg" id="msg"></div>
+
+<div id="login" class="box">
+ <input id="pw" type="password" placeholder="পাসওয়ার্ড" autocomplete="current-password">
+ <button class="p" id="lb">লগইন</button>
+</div>
+
+<div id="app">
+ <div class="row" style="justify-content:space-between;margin-bottom:8px"><span class="m">আপনি লগইন আছেন (১২ ঘণ্টা)</span><button id="lo">লগআউট</button></div>
+ <div class="tabs" role="tablist">
+  <button role="tab" data-t="art" aria-selected="true">খবর</button>
+  <button role="tab" data-t="post" aria-selected="false">নিজের খবর</button>
+  <button role="tab" data-t="brk" aria-selected="false">ব্রেকিং</button>
+  <button role="tab" data-t="src" aria-selected="false">সোর্স</button>
+ </div>
+
+ <section id="t-art">
+  <div class="row"><select id="fc" style="flex:1"><option value="">সব ক্যাটাগরি</option><option value="bd">বর্তমান</option><option value="intl">আন্তর্জাতিক</option><option value="sp">খেলাধুলা</option></select>
+  <input id="fq" placeholder="শিরোনামে খুঁজুন" style="flex:2"></div>
+  <div id="al"></div>
+ </section>
+
+ <section id="t-post" style="display:none" class="box">
+  <select id="pc"><option value="bd">বর্তমান</option><option value="intl">আন্তর্জাতিক</option><option value="sp">খেলাধুলা</option></select>
+  <input id="pt" placeholder="শিরোনাম" maxlength="200">
+  <textarea id="ps" placeholder="সারাংশ (নিজের লেখা)" maxlength="500"></textarea>
+  <input id="pu" placeholder="লিংক (ফাঁকা রাখলে সাইটের ঠিকানা বসবে)">
+  <button class="p" id="pb">প্রকাশ করুন</button>
+ </section>
+
+ <section id="t-brk" style="display:none" class="box">
+  <div class="m" id="bcur">লোড হচ্ছে…</div>
+  <input id="bt" placeholder="ব্রেকিং নিউজের লেখা" maxlength="200">
+  <input id="bu" placeholder="লিংক (ঐচ্ছিক)">
+  <div class="row"><button class="p" id="bs">চালু করুন</button><button class="d" id="bo">বন্ধ করুন</button></div>
+ </section>
+
+ <section id="t-src" style="display:none">
+  <div id="sl"></div>
+  <div class="box"><b>নতুন সোর্স</b>
+   <input id="sn" placeholder="নাম">
+   <input id="su" placeholder="RSS লিংক (https://...)">
+   <div class="row"><select id="sc" style="flex:1"><option value="bd">বর্তমান</option><option value="intl">আন্তর্জাতিক</option><option value="sp">খেলাধুলা</option></select>
+   <select id="sg" style="flex:1"><option value="bn">বাংলা</option><option value="en">ইংরেজি</option></select></div>
+   <button class="p" id="sa">যোগ করুন</button></div>
+ </section>
+</div>
+</div>
+<script>
+var API="https://newsinfo-fetcher.newsinfo9292.workers.dev/admin/";
+var $=function(i){return document.getElementById(i)};
+var TK=null;try{TK=sessionStorage.getItem("tk")}catch(e){}
+function say(t){var m=$("msg");m.textContent=t;m.style.display="block";clearTimeout(say.t);say.t=setTimeout(function(){m.style.display="none"},4000)}
+function el(t,c,x){var e=document.createElement(t);if(c)e.className=c;if(x)e.textContent=x;return e}
+function api(p,body){
+ var o={headers:{Authorization:"Bearer "+(TK||"")}};
+ if(body){o.method="POST";o.body=JSON.stringify(body);o.headers["Content-Type"]="application/json"}
+ return fetch(API+p,o).then(function(r){return r.json().then(function(j){
+  if(r.status===401&&p!=="login"){out();throw new Error("আবার লগইন করুন")}
+  if(!r.ok)throw new Error(j.error||"ভুল হয়েছে");return j})})}
+function show(){$("login").style.display=TK?"none":"block";$("app").style.display=TK?"block":"none";if(TK)loadArt()}
+function out(){TK=null;try{sessionStorage.removeItem("tk")}catch(e){}show()}
+$("lb").onclick=function(){api("login",{password:$("pw").value}).then(function(j){TK=j.token;try{sessionStorage.setItem("tk",TK)}catch(e){}$("pw").value="";show()}).catch(function(e){say(e.message)})};
+$("pw").onkeydown=function(e){if(e.key==="Enter")$("lb").onclick()};
+$("lo").onclick=out;
+document.querySelectorAll(".tabs button").forEach(function(b){b.onclick=function(){
+ document.querySelectorAll(".tabs button").forEach(function(x){x.setAttribute("aria-selected","false")});b.setAttribute("aria-selected","true");
+ ["art","post","brk","src"].forEach(function(t){$("t-"+t).style.display=t===b.dataset.t?"block":"none"});
+ if(b.dataset.t==="art")loadArt();if(b.dataset.t==="brk")loadBrk();if(b.dataset.t==="src")loadSrc()}});
+var CN={bd:"বর্তমান",intl:"আন্তর্জাতিক",sp:"খেলাধুলা"};
+function loadArt(){
+ api("articles?cat="+$("fc").value+"&q="+encodeURIComponent($("fq").value)).then(function(a){
+  var l=$("al");l.textContent="";if(!a.length)l.appendChild(el("div","m","কোনো খবর নেই"));
+  a.forEach(function(x){
+   var b=el("div","box it"+(x.hidden?" off":""));b.appendChild(el("h4","",(x.pinned?"📌 ":"")+x.title));
+   b.appendChild(el("div","m",(x.is_own?"নিজের":(x.sources&&x.sources.name)||"")+" · "+CN[x.category]+" · "+new Date(x.published_at).toLocaleString("bn-BD")+(x.hidden?" · লুকানো":"")));
+   var r=el("div","row");
+   var p=el("button","",x.pinned?"পিন খুলুন":"পিন করুন");p.onclick=function(){act("article-set",{id:x.id,field:"pinned",value:!x.pinned})};
+   var h=el("button","",x.hidden?"দেখান":"লুকান");h.onclick=function(){act("article-set",{id:x.id,field:"hidden",value:!x.hidden})};
+   var d=el("button","d","মুছুন");d.onclick=function(){if(confirm("সত্যিই মুছবেন?"))act("article-delete",{id:x.id})};
+   r.appendChild(p);r.appendChild(h);r.appendChild(d);b.appendChild(r);l.appendChild(b)})
+ }).catch(function(e){say(e.message)})}
+function act(p,b){api(p,b).then(function(){say("হয়েছে");loadArt()}).catch(function(e){say(e.message)})}
+$("fc").onchange=loadArt;var ft;$("fq").oninput=function(){clearTimeout(ft);ft=setTimeout(loadArt,400)};
+$("pb").onclick=function(){api("post",{category:$("pc").value,title:$("pt").value,summary:$("ps").value,url:$("pu").value}).then(function(){say("প্রকাশ হয়েছে (সাইটে ৩০ সেকেন্ডের মধ্যে আসবে)");$("pt").value=$("ps").value=$("pu").value=""}).catch(function(e){say(e.message)})};
+function loadBrk(){api("breaking").then(function(j){$("bcur").textContent=j.text?"এখন চালু: "+j.text:"এখন কোনো ব্রেকিং নিউজ নেই"}).catch(function(e){say(e.message)})}
+$("bs").onclick=function(){api("breaking-set",{text:$("bt").value,url:$("bu").value}).then(function(){say("চালু হয়েছে");$("bt").value=$("bu").value="";loadBrk()}).catch(function(e){say(e.message)})};
+$("bo").onclick=function(){api("breaking-set",{text:""}).then(function(){say("বন্ধ হয়েছে");loadBrk()}).catch(function(e){say(e.message)})};
+function loadSrc(){api("sources").then(function(a){var l=$("sl");l.textContent="";a.forEach(function(s){
+ var b=el("div","box it"+(s.active?"":" off"));b.appendChild(el("h4","",s.name));b.appendChild(el("div","m",CN[s.category]+" · "+s.feed_url));
+ var t=el("button","",s.active?"বন্ধ করুন":"চালু করুন");t.onclick=function(){api("source-toggle",{id:s.id,active:!s.active}).then(loadSrc).catch(function(e){say(e.message)})};
+ b.appendChild(t);l.appendChild(b)})}).catch(function(e){say(e.message)})}
+$("sa").onclick=function(){api("source-add",{name:$("sn").value,feed_url:$("su").value,category:$("sc").value,lang:$("sg").value}).then(function(){say("যোগ হয়েছে");$("sn").value=$("su").value="";loadSrc()}).catch(function(e){say(e.message)})};
+show();
+</script>
+</body>
+</html>
