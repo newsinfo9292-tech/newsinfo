@@ -1,6 +1,13 @@
 <!DOCTYPE html>
 <html lang="bn">
-<head>
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#14213d">
+<link rel="icon" type="image/png" href="/icon-192.png">
+<link rel="apple-touch-icon" href="/icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="news.info">
+ <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>news.info – সর্বশেষ খবর</title>
@@ -152,6 +159,9 @@ load(cat);
 loadBk();
 setInterval(function(){if(!document.hidden){load(cat);loadBk()}},60000);
 document.addEventListener("visibilitychange",function(){if(!document.hidden)load(cat)});
+</script>
+<script>
+if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js").catch(function(){})})}
 </script>
 </body>
 </html>
