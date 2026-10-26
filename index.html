@@ -70,6 +70,7 @@ footer{text-align:center;color:var(--mute);font-size:13px;padding:0 14px 30px}
 <header><div class="wrap">
  <div class="bar"><div class="logo">news<b>.info</b></div>
   <div class="icons">
+   <button class="ib" id="ia" aria-label="অ্যাপ ইনস্টল করুন" title="অ্যাপ ইনস্টল করুন" style="display:none">📲</button>
    <button class="ib" id="sb" aria-label="সার্চ">🔍</button>
    <button class="ib" id="tb" aria-label="ডার্ক বা লাইট মোড">🌓</button>
   </div></div>
@@ -162,6 +163,22 @@ document.addEventListener("visibilitychange",function(){if(!document.hidden)load
 </script>
 <script>
 if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js").catch(function(){})})}
+</script>
+ <script>
+(function(){
+var b=document.getElementById("ia"),dp=null;
+if(!b)return;
+var sa=matchMedia("(display-mode: standalone)").matches||navigator.standalone===true;
+if(sa)return;
+var ios=/iphone|ipad|ipod/i.test(navigator.userAgent);
+window.addEventListener("beforeinstallprompt",function(e){e.preventDefault();dp=e;b.style.display=""});
+window.addEventListener("appinstalled",function(){dp=null;b.style.display="none"});
+if(ios)b.style.display="";
+b.onclick=function(){
+ if(dp){dp.prompt();dp.userChoice.then(function(){dp=null;b.style.display="none"}).catch(function(){})}
+ else if(ios){alert("Safari-তে নিচের শেয়ার বাটন চাপুন, তারপর “Add to Home Screen” বেছে নিন।")}
+};
+})();
 </script>
 </body>
 </html>
